@@ -72,16 +72,16 @@ casper.run(function () {
   elements.forEach(function (element) {
     utils.dump(element);
     // casper.echo(element);
-    if (element["x"] < 1003) {
+    if (element["x"] < 1031) {
       z=element["text"];
-      if (element["x"] == 104) person["name"] = z.substring(1, z.length-1);
-      if (element["x"] == 318) person["company"] = z.substring(1, z.length-1);
-      if (element["x"] == 386) person["phone"] = z.substring(1, z.length-1);
-      if (element["x"] == 466) person["email"] = z.substring(1, z.length-1);
-      if (element["x"] == 656) person["business_sector"] = z.substring(1, z.length-1);
-      if (element["x"] == 757) person["specialty"] = z.substring(1, z.length-1);
-      if (element["x"] == 868) person["visit_date"] = z.replace(/\./g,'/').substring(1, z.length-1);
-      if (element["x"] == 1002) {
+      if (element["x"] >100 && element["x"] <200) person["name"] = z.substring(1, z.length-1);
+      if (element["x"] >300 && element["x"] <350) person["company"] = z.substring(1, z.length-1);
+      if (element["x"] >350 && element["x"] <450) person["phone"] = z.substring(1, z.length-1);
+      if (element["x"] >450 && element["x"] <550) person["email"] = z.substring(1, z.length-1);
+      if (element["x"] >550 && element["x"] <700) person["business_sector"] = z.substring(1, z.length-1);
+      if (element["x"] >700 && element["x"] <800) person["specialty"] = z.substring(1, z.length-1);
+      if (element["x"] >800 && element["x"] <900) person["visit_date"] = z.replace(/\./g,'/').substring(1, z.length-1);
+      if (element["x"] >900 && element["x"] <1030) {
         person["invited_by"] =  z.substring(1, z.length-1);
         people.push(JSON.stringify(person));
         // utils.dump(person);

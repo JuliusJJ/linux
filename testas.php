@@ -71,65 +71,67 @@ foreach ($klubai as $k) {
     }
     mysqli_close($conn);
 
-//     putenv("PHANTOMJS_EXECUTABLE=node_modules/phantomjs/lib/phantom/bin/phantomjs.exe");
+    // putenv("PHANTOMJS_EXECUTABLE=node_modules/phantomjs/lib/phantom/bin/phantomjs.exe");
     exec('casperjs scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
     exec('casperjs scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
-    if (!$json1 = file_get_contents('./' . $id . 'members.json')) {
-        echo "break";
-        continue;
-    }
-    $json2 = file_get_contents('./' . $id . 'guests.json');
-    $nariai = json_decode($json1);
-    $sveciai = json_decode($json2);
-    require "connect.php";
 
-    if (!empty($sveciai)) {
-        foreach ($sveciai as $k => $s) {
-            $check = false;
-            $name = explode(" ", $s->name);
-            if (isset($vardai_s)) {
-                str_replace('/', '-', $s->visit_date);
-                foreach ($vardai_s as $v) {
-                    if ($v['vardas'] == $name[0] && $v['pavarde'] == $name[1]) {
-                        $check = true;
-                        break;
-                    }
-                }
-            }
-            if (!$check) {
-                $t = true;
-                $stmt = $conn->prepare('INSERT INTO guests (id_klubas, vardas, pavarde, imone, telefonas, mailas, veikla, data, pakviete, atvyko, mok, uzpildyta, tipas, lastmod, tikslinis) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 2, "false", 0, ' . time() . ', 0)');
-                $stmt->bind_param("issssssss", $id, $name[0], $name[1], $s->company, $s->phone, $s->email, $s->specialty, $s->visit_date, $s->invited_by);
-                $response[$k . "_s_status"] = true;
-            }
-        }
-    }
-    if (!empty($nariai)) {
-        foreach ($nariai as $k => $n) {
-            $check = false;
-            $name = explode(" ", $n->name);
-            if (isset($vardai_n)) {
-                foreach ($vardai_n as $v) {
-                    if ($v['vardas'] == $name[0] && $v['pavarde'] == $name[1]) {
-                        $check = true;
-                        if ($v["active"] != $n->active) {
-                            $t = true;
-                            $stmt = $conn->prepare('UPDATE names set active=? where id_name=?');
-                            $stmt->bind_param("ii", $n->active, $v["id_n"]);
-                            $response[$k . "_n_aupdt_status"] = true;
+    if ($json1 = file_get_contents('./' . $id . 'members.json')) {
+        echo $id;
+        $json2 = file_get_contents('./' . $id . 'guests.json');
+        $nariai = json_decode($json1);
+        $sveciai = json_decode($json2);
+        print "<pre>";
+        print_r($sveciai);
+        require "connect.php";
+
+        if (!empty($sveciai)) {
+            foreach ($sveciai as $k => $s) {
+                $check = false;
+                $name = explode(" ", $s->name);
+                if (isset($vardai_s)) {
+                    str_replace('/', '-', $s->visit_date);
+                    foreach ($vardai_s as $v) {
+                        if ($v['vardas'] == $name[0] && $v['pavarde'] == $name[1]) {
+                            $check = true;
+                            break;
                         }
-                        break;
                     }
                 }
-            }
-            if (!$check) {
-                $t = true;
-                $stmt = $conn->prepare('INSERT INTO names (id_klubas, vardas, pavarde, active) VALUES (?, ?, ?, ?)');
-                $stmt->bind_param("issi", $id, $name[0], $name[1], $n->active);
-                $response[$k . "_n_status"] = true;
+                if (!$check) {
+                    $t = true;
+                    $stmt = $conn->prepare('INSERT INTO guests (id_klubas, vardas, pavarde, imone, telefonas, mailas, veikla, data, pakviete, atvyko, mok, uzpildyta, tipas, lastmod, tikslinis) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 2, "false", 0, ' . time() . ', 0)');
+                    $stmt->bind_param("sssssssss", $id, $name[0], $name[1], $s->company, $s->phone, $s->email, $s->specialty, $s->visit_date, $s->invited_by);
+                    $stmt->execute();
+                }
             }
         }
+        if (!empty($nariai)) {
+            foreach ($nariai as $k => $n) {
+                $check = false;
+                $name = explode(" ", $n->name);
+                if (isset($vardai_n)) {
+                    foreach ($vardai_n as $v) {
+                        if ($v['vardas'] == $name[0] && $v['pavarde'] == $name[1]) {
+                            $check = true;
+                            if ($v["active"] != $n->active) {
+                                $t = true;
+                                $stmt = $conn->prepare('UPDATE names set active=? where id_name=?');
+                                $stmt->bind_param("ii", $n->active, $v["id_n"]);
+                                $stmt->execute();
+                            }
+                            break;
+                        }
+                    }
+                }
+                if (!$check) {
+                    $t = true;
+                    $stmt = $conn->prepare('INSERT INTO names (id_klubas, vardas, pavarde, active) VALUES (?, ?, ?, ?)');
+                    $stmt->bind_param("sssi", $id, $name[0], $name[1], $n->active);
+                    $stmt->execute();
+                }
+            }
+        }
+        mysqli_close($conn);
     }
-    mysqli_close($conn);
 }

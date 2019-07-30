@@ -78,7 +78,6 @@ casper.run(function () {
   var person = {};
   var people = [];
   elements.forEach(function (element) {
-    var i = 0;
     // utils.dump(element);
     // casper.echo(element);
     if (element["x"] < 930) {
@@ -90,7 +89,6 @@ casper.run(function () {
         person["phone"] = z.substring(1, z.length - 1);
         person["active"] = "1";
         people.push(JSON.stringify(person));
-        i++;
         // utils.dump(person);
         // fs.writeFile('text.json', '{"name": "Julius", "age": 10}' , 'utf-8');
         // fs.writeFileSync('./data.json', util.inspect(obj) , 'utf-8');
