@@ -75,9 +75,9 @@ foreach ($klubai as $k) {
     exec('casperjs scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
     exec('casperjs scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
 
-    if ($json1 = file_get_contents('/downlaods/linux/' . $id . 'members.json')) {
+    if ($json1 = file_get_contents('./' . $id . 'members.json')) {
         echo $id;
-        $json2 = file_get_contents('/downlaods/linux/' . $id . 'guests.json');
+        $json2 = file_get_contents('./' . $id . 'guests.json');
         $nariai = json_decode($json1);
         $sveciai = json_decode($json2);
         print "<pre>";
