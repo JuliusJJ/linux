@@ -14,7 +14,7 @@ while ($row = $result->fetch_assoc()) {
 
 foreach ($klubai as $k) {
     $id = $k["id_k"];
-    require "connect.php";
+    require "/downloads/linux/connect.php";
 
     $sql = 'SELECT susitikimas, laikas, connect_name, connect_password from nustatymai where id_klubas=' . $id;
     $result = $conn->query($sql);
