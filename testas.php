@@ -1,7 +1,7 @@
 <?php
 ini_set("allow_url_fopen", 1);
 ini_set('max_execution_time', 0);
-require "/downloads/linux/connect.php";
+require "connect.php";
 
 $sql = 'SELECT * FROM clubs'; // . $_SESSION["klubas"];
 $result = $conn->query($sql);
@@ -14,7 +14,7 @@ while ($row = $result->fetch_assoc()) {
 
 foreach ($klubai as $k) {
     $id = $k["id_k"];
-    require "/downloads/linux/connect.php";
+    require "connect.php";
 
     $sql = 'SELECT susitikimas, laikas, connect_name, connect_password from nustatymai where id_klubas=' . $id;
     $result = $conn->query($sql);
@@ -82,7 +82,7 @@ foreach ($klubai as $k) {
         $sveciai = json_decode($json2);
         print "<pre>";
         print_r($sveciai);
-        require "/downloads/linux/connect.php";
+        require "connect.php";
 
         if (!empty($sveciai)) {
             foreach ($sveciai as $k => $s) {
