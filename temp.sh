@@ -1,2 +1,2 @@
-#!/usr/bin/php
+#!/bin/bash
 echo "hello console";
