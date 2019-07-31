@@ -1,7 +1,7 @@
 <?php
 ini_set("allow_url_fopen", 1);
 ini_set('max_execution_time', 0);
-require "connect.php";
+require "/downloads/linux/connect.php";
 
 $sql = 'SELECT * FROM clubs'; // . $_SESSION["klubas"];
 $result = $conn->query($sql);
@@ -75,14 +75,14 @@ foreach ($klubai as $k) {
     exec('casperjs scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
     exec('casperjs scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
 
-    if ($json1 = file_get_contents('./' . $id . 'members.json')) {
+    if ($json1 = file_get_contents('/downlaods/linux/' . $id . 'members.json')) {
         echo $id;
-        $json2 = file_get_contents('./' . $id . 'guests.json');
+        $json2 = file_get_contents('/downlaods/linux/' . $id . 'guests.json');
         $nariai = json_decode($json1);
         $sveciai = json_decode($json2);
         print "<pre>";
         print_r($sveciai);
-        require "connect.php";
+        require "/downloads/linux/connect.php";
 
         if (!empty($sveciai)) {
             foreach ($sveciai as $k => $s) {
