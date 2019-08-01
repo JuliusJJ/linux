@@ -69,27 +69,41 @@ casper.run(function () {
   
   var person = {};
   var people = [];
+  var i = 0;
   elements.forEach(function (element) {
+    console.log(i);
     utils.dump(element);
     // casper.echo(element);
-    if (element["x"] < 1031) {
-      z=element["text"];
-      if (element["x"] >100 && element["x"] <200) person["name"] = z.substring(1, z.length-1);
-      if (element["x"] >300 && element["x"] <350) person["company"] = z.substring(1, z.length-1);
-      if (element["x"] >350 && element["x"] <450) person["phone"] = z.substring(1, z.length-1);
-      if (element["x"] >450 && element["x"] <550) person["email"] = z.substring(1, z.length-1);
-      if (element["x"] >550 && element["x"] <700) person["business_sector"] = z.substring(1, z.length-1);
-      if (element["x"] >700 && element["x"] <800) person["specialty"] = z.substring(1, z.length-1);
-      if (element["x"] >800 && element["x"] <900) person["visit_date"] = z.replace(/\./g,'/').substring(1, z.length-1);
-      if (element["x"] >900 && element["x"] <1030) {
-        person["invited_by"] =  z.substring(1, z.length-1);
-        people.push(JSON.stringify(person));
-        // utils.dump(person);
-        // fs.writeFileSync('./data.json', util.inspect(obj) , 'utf-8');
-        // casper.echo("--------------------------------------------------------------------------")
-      }
-      
+
+    z=element["text"];
+    if (i==1) person["name"] = z.substring(1, z.length-1);
+    if (i==2) person["company"] = z.substring(1, z.length-1);
+    if (i==3) person["phone"] = z.substring(1, z.length-1);
+    if (i==4) person["email"] = z.substring(1, z.length-1);
+    if (i==5) person["business_sector"] = z.substring(1, z.length-1);
+    if (i==6) person["specialty"] = z.substring(1, z.length-1);
+    if (i==7) person["visit_date"] = z.replace(/\./g,'/').substring(1, z.length-1);
+    if (i==8) {
+      person["invited_by"] =  z.substring(1, z.length-1);
+      people.push(JSON.stringify(person));
     }
+    if(i==9) i=0;
+    else i++;
+
+    // if (element["x"] < 1100) {
+    //   z=element["text"];
+    //   if (element["x"] >100 && element["x"] <200) person["name"] = z.substring(1, z.length-1);
+    //   if (element["x"] >300 && element["x"] <350) person["company"] = z.substring(1, z.length-1);
+    //   if (element["x"] >350 && element["x"] <450) person["phone"] = z.substring(1, z.length-1);
+    //   if (element["x"] >450 && element["x"] <550) person["email"] = z.substring(1, z.length-1);
+    //   if (element["x"] >550 && element["x"] <750) person["business_sector"] = z.substring(1, z.length-1);
+    //   if (element["x"] >750 && element["x"] <850) person["specialty"] = z.substring(1, z.length-1);
+    //   if (element["x"] >850 && element["x"] <950) person["visit_date"] = z.replace(/\./g,'/').substring(1, z.length-1);
+    //   if (element["x"] >950 && element["x"] <1100) {
+    //     person["invited_by"] =  z.substring(1, z.length-1);
+    //     people.push(JSON.stringify(person));
+    //   }
+    // }
   });
   fs.write(id+"guests.json", "[", 'w');
   fs.write(id+"guests.json", people, 'w+');

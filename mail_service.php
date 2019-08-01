@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 date_default_timezone_set("Europe/Vilnius");
 
@@ -120,7 +119,7 @@ foreach ($klubai as $k) {
 
                 if (is_array($duom)) {
 
-                    foreach ($duom as $k => $val) {
+                    foreach ($duom as $val) {
                         // print "<pre>";
                         // print_r($val);
                         // print "</pre>";

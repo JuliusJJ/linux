@@ -1,7 +1,7 @@
-#!/usr/bin/php
 <?php
 ini_set("allow_url_fopen", 1);
 ini_set('max_execution_time', 0);
+date_default_timezone_set('Europe/Vilnius');
 require "connect.php";
 
 $sql = 'SELECT * FROM clubs'; // . $_SESSION["klubas"];
@@ -12,8 +12,11 @@ while ($row = $result->fetch_assoc()) {
     $tempo["pavadinimas"] = $row["pavadinimas"];
     $klubai[] = $tempo;
 }
+mysqli_close($conn);
 
 foreach ($klubai as $k) {
+    $vardai_n = array();
+    $vardai_s = array();
     $id = $k["id_k"];
     require "connect.php";
 
@@ -73,8 +76,8 @@ foreach ($klubai as $k) {
     mysqli_close($conn);
 
     // putenv("PHANTOMJS_EXECUTABLE=node_modules/phantomjs/lib/phantom/bin/phantomjs.exe");
-    exec('/usr/local/bin/casperjs /downloads/linux/scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
-    exec('/usr/local/bin/casperjs /downloads/linux/scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
+    // exec('casperjs scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
+    // exec('casperjs scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
 
     if ($json1 = file_get_contents('./' . $id . 'members.json')) {
         echo $id;
