@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 ini_set("allow_url_fopen", 1);
 ini_set('max_execution_time', 0);
@@ -77,8 +76,8 @@ foreach ($klubai as $k) {
     mysqli_close($conn);
 
     // putenv("PHANTOMJS_EXECUTABLE=node_modules/phantomjs/lib/phantom/bin/phantomjs.exe");
-    // exec('casperjs scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
-    // exec('casperjs scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
+    exec('casperjs scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
+    exec('casperjs scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
 
     if ($json1 = file_get_contents('./' . $id . 'members.json')) {
         echo $id;
