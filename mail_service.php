@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 date_default_timezone_set("Europe/Vilnius");
 
@@ -100,12 +99,12 @@ foreach ($klubai as $k) {
                 $mail->CharSet = 'UTF-8';
                 $mail->Host = 'smtp.hostinger.com';                    // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
-                $mail->Username = 'administracija@bnisantaka.com';                 // SMTP username
-                $mail->Password = 'bni1731733';                           // SMTP password
+                $mail->Username = 'bnilietuva@gmail.com';                 // SMTP username
+                $mail->Password = 'Naujas1731733)';                           // SMTP password
                 $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
                 $mail->Port = 465;                                    // TCP port to connect to //587;465
-                $mail->setFrom('administracija@bnisantaka.com', 'BNI ' . $k["pavadinimas"]);
-                $mail->addReplyTo('administracija@bnisantaka.com', 'Information');
+                $mail->setFrom('bnilietuva@gmail.com', 'BNI ' . $k["pavadinimas"]);
+                $mail->addReplyTo('bnilietuva@gmail.com', 'Information');
                 $mail->isHTML(true);
                 $mail->Subject = 'Prašome užpildyti šią anketą';
                 $mail->SMTPOptions = array(
