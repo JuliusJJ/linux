@@ -79,8 +79,8 @@ foreach ($klubai as $k) {
     // putenv("PHANTOMJS_EXECUTABLE=node_modules/phantomjs/lib/phantom/bin/phantomjs.exe");
     unlink($id."guests.json");
     unlink($id."members.json");
-    exec('casperjs scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
-    exec('casperjs scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
+    exec('casperjs /downloads/linux/scrape_members.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
+    exec('casperjs /downloads/linux/scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
 
     if ($json1 = file_get_contents('./' . $id . 'members.json')) {
         echo $id;
