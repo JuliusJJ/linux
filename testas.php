@@ -3,7 +3,7 @@
 ini_set("allow_url_fopen", 1);
 ini_set('max_execution_time', 0);
 date_default_timezone_set('Europe/Vilnius');
-require "connect.php";
+require "/donwloads/linux/connect.php";
 
 $sql = 'SELECT * FROM clubs'; // . $_SESSION["klubas"];
 $result = $conn->query($sql);
@@ -19,7 +19,7 @@ foreach ($klubai as $k) {
     $vardai_n = array();
     $vardai_s = array();
     $id = $k["id_k"];
-    require "connect.php";
+    require "/donwloads/linux/connect.php";
 
     $sql = 'SELECT susitikimas, laikas, connect_name, connect_password from nustatymai where id_klubas=' . $id;
     $result = $conn->query($sql);
@@ -89,7 +89,7 @@ foreach ($klubai as $k) {
         $sveciai = json_decode($json2);
         print "<pre>";
         print_r($sveciai);
-        require "connect.php";
+        require "/donwloads/linux/connect.php";
 
         if (!empty($sveciai)) {
             foreach ($sveciai as $k => $s) {
