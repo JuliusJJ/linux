@@ -83,12 +83,9 @@ foreach ($klubai as $k) {
     exec('/usr/local/bin/casperjs /downloads/linux/scrape_guests.js "' . $settings["conName"] . '" "' . $settings["conPsw"] . '" "' . $id . '"');
 
     if ($json1 = file_get_contents('./' . $id . 'members.json')) {
-        echo $id;
         $json2 = file_get_contents('./' . $id . 'guests.json');
         $nariai = json_decode($json1);
         $sveciai = json_decode($json2);
-        print "<pre>";
-        print_r($sveciai);
         require "connect.php";
 
         if (!empty($sveciai)) {
